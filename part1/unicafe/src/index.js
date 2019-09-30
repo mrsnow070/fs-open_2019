@@ -5,7 +5,7 @@ const Header = ({ header }) => <h1>{header}</h1>
 const Button = ({ click, text }) => <button onClick={click}>{text}</button>;
 
 const Statistic = ({ value, text }) => <p>{text} {value}</p>
-const Statistics = (props) => {
+const Statistics = ({ good, neutral, bad, stat }) => {
     const calcAverage = (arr) => {
         if (arr.length > 0) {
             return (arr.reduce((total, score) => total + score)) / arr.length
@@ -19,17 +19,17 @@ const Statistics = (props) => {
         }
         return 0;
     }
-    console.log(props.stat.scores)
+     
     return (
         <>
             <Header header="statistic" />
-            {props.stat.scores.length >= 1 ? <>
-                <Statistic text="good" value={props.good} />
-                <Statistic text="neutral" value={props.neutral} />
-                <Statistic text="bad" value={props.bad} />
-                <Statistic text="all" value={props.stat.scores.length} />
-                <Statistic text="average" value={calcAverage(props.stat.scores)} />
-                <Statistic text="positive" value={`${calcPositive(props.good, props.stat.scores.length)} %`} /></>
+            {stat.scores.length >= 1 ? <>
+                <Statistic text="good" value={good} />
+                <Statistic text="neutral" value={neutral} />
+                <Statistic text="bad" value={bad} />
+                <Statistic text="all" value={stat.scores.length} />
+                <Statistic text="average" value={calcAverage(stat.scores)} />
+                <Statistic text="positive" value={`${calcPositive(good, stat.scores.length)} %`} /></>
                 : <p>No feedback given</p>}
 
         </>
@@ -48,24 +48,14 @@ const App = () => {
     });
 
     const handleClick = (state, cb, score) => {
-
-
         return () => {
             setstatistic({
                 ...statistic,
                 scores: statistic.scores.concat(score)
             });
-            // calcAverage();
             return cb(state + 1);
         };
     }
-
-    // const calcAverage = (cb) => {
-
-    //     let score = average.reduce((total, score) => total + score);
-    //     console.log("Average ", score)
-
-    // }
 
     return (
         <div>
