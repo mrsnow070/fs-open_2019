@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const Button = ({ click, text }) => <div> <button onClick={click}>{text}</button></div>;
+const Button = ({ click, text }) => <button onClick={click}>{text}</button>;
 
-const App = (props) => {
-    const [selected, setSelected] = useState(0)
-    console.log(selected)
+const App = ({ anecdotes }) => {
+    const [selected, setSelected] = useState(0);
+    const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+    const [maxVotes, setMaxVotes] = useState(0);
+
+    useEffect(() => {
+        setMaxVotes(votes.indexOf(Math.max(...votes)));
+    }, [votes])
+
     const nextAnecdote = (min, max) => {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -17,11 +23,26 @@ const App = (props) => {
         }
     };
 
+    const vote = (current) => {
+        let tempArray = [...votes];
+        tempArray[current] += 1;
+        setVotes([...tempArray]);
+    }
+
+
     return (
         <div>
-            {props.anecdotes[selected]}
-            <Button click={() => nextAnecdote(0, anecdotes.length - 1)} text="next anecdote" />
-        </div>
+            <h1>Anecdote of the day</h1>
+            {anecdotes[selected]}
+            <p>{`has votes ${votes[selected]}`}</p>
+            <div>
+                <Button click={() => vote(selected)} text="vote" />
+                <Button click={() => nextAnecdote(0, anecdotes.length - 1)} text="next anecdote" />
+            </div>
+            <h1>Anecdote with most votes</h1>
+            {anecdotes[maxVotes]}
+            <p>has {Math.max(...votes)} votes</p>
+        </div >
     )
 }
 
@@ -33,6 +54,7 @@ const anecdotes = [
     'Premature optimization is the root of all evil.',
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
+
 
 ReactDOM.render(
     <App anecdotes={anecdotes} />,
