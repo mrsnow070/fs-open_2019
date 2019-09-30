@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 const Header = ({ header }) => <h1>{header}</h1>
 const Button = ({ click, text }) => <button onClick={click}>{text}</button>;
 
-const Statistic = ({ value, text }) => <p>{text} {value}</p>
+const Statistic = ({ value, text }) => <tr><td>{text}</td><td> {value}</td></tr>
 const Statistics = ({ good, neutral, bad, stat }) => {
     const calcAverage = (arr) => {
         if (arr.length > 0) {
@@ -19,20 +19,20 @@ const Statistics = ({ good, neutral, bad, stat }) => {
         }
         return 0;
     }
-     
-    return (
-        <>
-            <Header header="statistic" />
-            {stat.scores.length >= 1 ? <>
-                <Statistic text="good" value={good} />
-                <Statistic text="neutral" value={neutral} />
-                <Statistic text="bad" value={bad} />
-                <Statistic text="all" value={stat.scores.length} />
-                <Statistic text="average" value={calcAverage(stat.scores)} />
-                <Statistic text="positive" value={`${calcPositive(good, stat.scores.length)} %`} /></>
-                : <p>No feedback given</p>}
 
-        </>
+    return (
+        <table>
+            <tbody>
+                {stat.scores.length >= 1 ? <>
+                    <Statistic text="good" value={good} />
+                    <Statistic text="neutral" value={neutral} />
+                    <Statistic text="bad" value={bad} />
+                    <Statistic text="all" value={stat.scores.length} />
+                    <Statistic text="average" value={calcAverage(stat.scores)} />
+                    <Statistic text="positive" value={`${calcPositive(good, stat.scores.length)} %`} /></>
+                    : <tr><td>No feedback given</td></tr>}
+            </tbody>
+        </table>
     )
 }
 
@@ -65,6 +65,7 @@ const App = () => {
             <Button click={handleClick(neutral, setNeutral, 0)} text="neutral" />
             <Button click={handleClick(bad, setBad, -1)} text="bad" />
 
+            <Header header="statistic" />
             <Statistics good={good} neutral={neutral} bad={bad} stat={statistic} />
 
         </div>
