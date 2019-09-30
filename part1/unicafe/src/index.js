@@ -1,61 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = (props) => {
-    return (
-        <h1>{props.course}</h1>
-    )
-}
+const Header = ({ header }) => <h1>{header}</h1>
+const Button = ({ click, text }) => <button onClick={click}>{text}</button>;
 
-const Part = (props) => <p>{props.part} {props.exercises}</p>;
-const Content = (props) => {
+const Counter = ({ count, text }) => <p>{text} {count}</p>
 
-    console.log(props)
-    
-    return (
-        <div>
-            <Part part={props.parts[0].name} exercises={props.parts[0].exercises} />
-            <Part part={props.parts[1].name} exercises={props.parts[1].exercises} />
-            <Part part={props.parts[2].name} exercises={props.parts[2].exercises} />
- 
-        </div>
-    )
-}
-const Total = (props) => {
-    console.log(props)
-    return (
-        <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
-    )
-}
 
 const App = () => {
-    const course = {
-        name: 'Half Stack application development',
-        parts: [
-            {
-                name: 'Fundamentals of React',
-                exercises: 10
-            },
-            {
-                name: 'Using props to pass data',
-                exercises: 7
-            },
-            {
-                name: 'State of a component',
-                exercises: 14
-            }
-        ]
-    }
+    // save clicks of each button to own state
+    const [good, setGood] = useState(0)
+    const [neutral, setNeutral] = useState(0)
+    const [bad, setBad] = useState(0)
 
-
+    const handleClick = (state, cb) => () => cb(state + 1)
 
     return (
         <div>
-            <Header course={course.name} />
-            <Content parts={course.parts} />
-            <Total parts={course.parts} />
+            <Header header="Give feedback" />
+
+            <Button click={handleClick(good, setGood)} text="good" />
+            <Button click={handleClick(neutral, setNeutral)} text="neutral" />
+            <Button click={handleClick(bad, setBad)} text="bad" />
+
+            <Header header="statistic" />
+            
+            <Counter text="good" count={good} />
+            <Counter text="neutral" count={neutral} />
+            <Counter text="bad" count={bad} />
         </div>
     )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />,
+    document.getElementById('root')
+)
