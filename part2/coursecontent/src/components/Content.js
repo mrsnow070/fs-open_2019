@@ -3,7 +3,6 @@ import Part from './Part';
 import Total from './Total';
 
 const Content = ({ content }) => {
-    console.log(content.parts)
     let displayParts = content.parts.map(
         p => <Part
             key={p.id}
