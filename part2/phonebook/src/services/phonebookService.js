@@ -24,11 +24,9 @@ export const putUpdateNumber = (id, person) => {
 export const getByName = name => {
     return axios.get(baseUrl)
         .then(resp => resp.data.filter((person) => {
-            
-            return person.name === name
-        })
-        )
 
+            return person.name === name
+        }))
 }
 
 
