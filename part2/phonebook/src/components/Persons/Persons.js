@@ -1,16 +1,22 @@
 import React from 'react';
 import { deleteEntry } from '../../services/phonebookService'
 
-export default ({ filter, persons, updatePersons }) => {
+export default ({ filter, persons, updatePersons, updateNotification }) => {
 
     const deleteHandler = (id, name) => {
         const updatedPersons = persons.filter(p => p.id !== id);
         if (window.confirm(`Do you really want delete ${name}`)) {
 
             deleteEntry(id).then(resp => {
-                if (resp.status === 200) {
-                    updatePersons([...updatedPersons])
-                }
+                updatePersons([...updatedPersons])
+                updateNotification({ type: 'notification', message: `${name} successely deleted` })
+
+            }).catch(error => {
+                updateNotification({
+                    type: 'error',
+                    message: `Information of ${name} has already removed from server`
+                });
+                updatePersons(persons.filter(person => person.name !== name))
             })
         }
     }

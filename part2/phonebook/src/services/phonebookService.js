@@ -17,8 +17,18 @@ export const deleteEntry = (id) => {
     return axios.delete(`${baseUrl}/${id}`);
 }
 
-export const putUpdateNumber = (id, number) => {
-    return axios.put(`${baseUrl}/${id}`, number)
+export const putUpdateNumber = (id, person) => {
+    return axios.put(`${baseUrl}/${id}`, person)
+}
+
+export const getByName = name => {
+    return axios.get(baseUrl)
+        .then(resp => resp.data.filter((person) => {
+            
+            return person.name === name
+        })
+        )
+
 }
 
 

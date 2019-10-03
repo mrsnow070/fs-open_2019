@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { postAddEntry, putUpdateNumber } from '../../services/phonebookService';
+import { postAddEntry, putUpdateNumber, getByName, getAll } from '../../services/phonebookService';
 
-export default ({ persons, updatePersons }) => {
+export default ({ updatePersons, updateNotification }) => {
 
     const [newName, setNewName] = useState('');
     const [newNumber, setNewNumber] = useState('');
-
-    let indexOfExistingElement = -1;
 
     const inputNameHandler = (e) => {
         setNewName(e.target.value)
@@ -16,35 +14,30 @@ export default ({ persons, updatePersons }) => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        if (isExist(newName)) {
-            postAddEntry({ name: newName, number: newNumber })
-            updatePersons(persons.concat({ name: newName, number: newNumber }))
-            return [setNewName(''), setNewNumber('')];
-        } else {
-            if (window.confirm(`${newName} is already added to phonebook. Replace old number with a new one?`)) {
-                const entry = persons[indexOfExistingElement];
-
-                putUpdateNumber(entry.id, { ...entry, number: newNumber }).then(resp => {
-                    if (resp.status === 200) {
-                        updatePersons(persons.map(person => person.id !== entry.id ? person : resp.data))
+        getByName(newName).then(data => {
+            if (data.length === 0) {
+                //не существует такого
+                postAddEntry({ name: newName, number: newNumber })
+                    .then(resp => {
+                        updateNotification({ type: 'notification', message: `Added ${newName}` })
+                        getAll()
+                            .then(resp => updatePersons(resp));
                         return [setNewName(''), setNewNumber('')];
-                    }
-                })
+                    });
+            } else {
+                if (window.confirm(`${newName} is already added to phonebook. Replace old number with a new one?`)) {
+                    putUpdateNumber(data[0].id, { ...data[0], number: newNumber })
+                        .then(resp => {
+                            updateNotification({ type: 'notification', message: `Number ${newName} is changed` });
+                            getAll()
+                                .then(resp => updatePersons(resp));
+                            return [setNewName(''), setNewNumber('')];
+                        })
+                }
             }
-        }
+        })
     }
 
-    const isExist = (string) => {
-        const existingIndex = persons.findIndex(p => p.name === string)
-
-        if (existingIndex === -1) {
-            return true
-        } else {
-            indexOfExistingElement = existingIndex
-        }
-
-
-    }
 
     return (
         <form onSubmit={submitHandler}>
