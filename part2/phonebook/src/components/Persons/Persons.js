@@ -1,13 +1,31 @@
 import React from 'react';
+import { deleteEntry } from '../../services/phonebookService'
 
-export default ({ filter, persons }) => {
+export default ({ filter, persons, updatePersons }) => {
+
+    const deleteHandler = (id, name) => {
+        const updatedPersons = persons.filter(p => p.id !== id);
+        if (window.confirm(`Do you really want delete ${name}`)) {
+
+            deleteEntry(id).then(resp => {
+                if (resp.status === 200) {
+                    updatePersons([...updatedPersons])
+                }
+            })
+        }
+    }
 
     const personsToShow = (filter) => {
 
-        return findMatches(filter, persons).map(person => <p key={person.name}>{person.name} {person.number}</p>)
-        // return(
-        //   persons.map(person => <p key={person.name}>{person.name} {person.number}</p>)
-        // )
+        return findMatches(filter, persons).map(
+            person => <p
+                key={person.name}
+            >
+                {person.name} {person.number} <button onClick={() => deleteHandler(person.id, person.name)}>delete &times;
+                </button>
+            </p>
+        )
+
     };
 
     const findMatches = (wordToMatch, persons) => {
