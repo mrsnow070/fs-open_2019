@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "watch": "nodemon index.js"
+    "watch": "nodemon index.js",
+    "build:ui":"rm -rf build && cd ../phonebooks-frontend/ && npm run build --prod && cp -r build ../phonebooks-backend/",
+    "deploy":"git push heroku master",
+    "deploy:full":"npm run build:ui && git add . && git commit -m uiBuild && npm run deploy"
   },
   "keywords": [],
   "author": "mrSnow070",
@@ -18,6 +21,5 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.3"
-  },
-  "proxy":"http://localhost:3001"
+  }
 }

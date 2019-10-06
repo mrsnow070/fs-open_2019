@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const app = express();
 const cors = require('cors');
+
+const app = express();
 
 morgan.token('data', (req, res) => {
     if (req.method === 'POST') {
@@ -12,6 +13,7 @@ morgan.token('data', (req, res) => {
 })
 //middlewares
 app.use(bodyParser.json());
+app.use(express.static('build'))
 app.use(cors());
 app.use(morgan(':method :url :status :response-time ms :data'));
 
