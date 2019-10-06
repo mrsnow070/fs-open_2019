@@ -8,7 +8,7 @@
     "watch": "nodemon index.js",
     "build:ui":"rm -rf build && cd ../phonebooks-frontend/ && npm run build --prod && cp -r build ../phonebooks-backend/",
     "deploy":"git push heroku master",
-    "deploy:full":"npm run build:ui && git add . && git commit -m uiBuild && npm run deploy"
+    "deploy:full":"npm run build:ui && git add . && git commit -m `uiBuild` && npm run deploy"
   },
   "keywords": [],
   "author": "mrSnow070",
