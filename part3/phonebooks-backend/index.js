@@ -1,7 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+
+const Person = require('./person');
 
 const app = express();
 
@@ -50,52 +53,19 @@ const checkValidity = (person, arr) => {
     return Math.min(...results)
 }
 
-let persons = [
-    {
-        "name": "Arto Hellas",
-        "number": "040-123456",
-        "id": 1
-    },
-    {
-        "name": "Ada Lovelace",
-        "number": "39-44-5323523",
-        "id": 2
-    },
-    {
-        "name": "Dan Abramov",
-        "number": "12-43-234345",
-        "id": 3
-    },
-    {
-        "name": "Mary Poppendieck",
-        "number": "39-23-6423122",
-        "id": 4
-    },
-    {
-        "name": "Doctor",
-        "number": "13-2444-234",
-        "id": 5
-    },
-    {
-        "name": "New Person 1",
-        "number": "123345",
-        "id": 6
-    },
-    {
-        "name": "New Person 2",
-        "number": "123456234",
-        "id": 7
-    },
-    {
-        "name": "New Person 3",
-        "number": "13231231",
-        "id": 8
-    }
-]
+
 
 app.get('/api/persons', (req, res, next) => {
-    res.json(persons);
+
+    Person.find({}).then(resp => {
+        console.log(resp);
+
+        return res.json(resp)
+
+    })
+    // res.json(persons);
 })
+
 
 app.get('/info', (req, res) => {
     res.send(
@@ -108,11 +78,12 @@ app.get('/info', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const person = persons.find(p => p.id === id);
+console.log(req.params.id);
 
-    person ? res.json(person)
-        : res.status(404).end()
+    Person.findById(req.params.id).then(note => {
+        res.json(note.toJSON())
+    })
+
 })
 
 app.delete('/api/persons/:id', (req, res) => {
@@ -126,22 +97,17 @@ app.delete('/api/persons/:id', (req, res) => {
 app.post('/api/persons', (req, res) => {
     const { body } = req;
 
-    const person = {
-        id: generateId(),
-        name: body.name,
-        number: body.number
-    }
+    const person = new Person({
+        name:body.name,
+        number:body.number
+    })
 
-    if (checkValidity(person, persons)) {
-        // @ts-ignore
-        persons = persons.concat(person);
-        res.json(person);
+    person.save().then(savedPerson=>{
+        res.json(savedPerson.toJSON());
+    })
 
-    } else {
-        res.status(403)
-            .send({ error: 'name or number must be unique' })
-            .end();
-    }
+
+   
 
 })
 
