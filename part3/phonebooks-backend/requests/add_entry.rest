@@ -1,7 +1,7 @@
-POST https://mysterious-dusk-55113.herokuapp.com/api/persons/ HTTP/1.1
+POST http://localhost:3001/api/persons/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"55",
-    "number":"55"
+    "name":"Hello_worlds_",
+    "number":12345678
 }

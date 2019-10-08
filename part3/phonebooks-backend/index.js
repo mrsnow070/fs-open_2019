@@ -14,102 +14,123 @@ morgan.token('data', (req, res) => {
     }
     return ' '
 })
+
+
+
 //middlewares
-app.use(bodyParser.json());
 app.use(express.static('build'))
-app.use(cors());
+app.use(bodyParser.json());
 app.use(morgan(':method :url :status :response-time ms :data'));
+app.use(cors());
 
 
 
 
-const generateId = () => {
-    return +(Math.random() * 1000000).toFixed();
-}
 
-const checkValidity = (person, arr) => {
-    const keys = Object.keys(person)
-    const results = [];
-    if (person.name.length === 0 || person.number.length === 0) {
-        results.push(0)
 
-        return Math.min(...results)
-    }
-    keys.forEach(key => {
-        arr.find(p => {
-            if (p[key] === person[key]) {
-                results.push(0)
+
+
+
+app.get('/api/persons/:id', (req, res, next) => {
+
+    Person.findById(req.params.id)
+        .then(person => {
+            if (person) {
+                res.json(person.toJSON())
+            } else {
+                res.status(404).end()
             }
-            else {
-                results.push(1)
-            }
+            res.json(person.toJSON())
         })
-    });
+        .catch(error => {
+            next(error)
+        })
 
-    console.log(person);
-
-
-
-    return Math.min(...results)
-}
-
-
+})
 
 app.get('/api/persons', (req, res, next) => {
 
     Person.find({}).then(resp => {
-        console.log(resp);
-
         return res.json(resp)
 
     })
-    // res.json(persons);
-})
-
-
-app.get('/info', (req, res) => {
-    res.send(
-        `
-        <p>phonebook has info for ${persons.length} people</p>
-        <div>${new Date()}</div>
-        
-        `
-    )
-})
-
-app.get('/api/persons/:id', (req, res) => {
-console.log(req.params.id);
-
-    Person.findById(req.params.id).then(note => {
-        res.json(note.toJSON())
-    })
-
 })
 
 app.delete('/api/persons/:id', (req, res) => {
-    const id = Number(req.params.id);
-    persons = persons.filter(p => p.id !== id);
 
-    res.status(204).end();
+    Person.findByIdAndRemove(req.params.id).then(result => {
+
+        res.json(result).status(204).end();
+    })
 
 })
 
-app.post('/api/persons', (req, res) => {
+app.get('/info', (req, res) => {
+
+    Person.find({}).then(result => {
+        res.send(
+            `
+        <p>phonebook has info for ${result.length} people</p>
+        <div>${new Date()}</div>
+        `
+        )
+    })
+
+})
+
+app.post('/api/persons', (req, res, next) => {
     const { body } = req;
 
     const person = new Person({
-        name:body.name,
-        number:body.number
-    })
-
-    person.save().then(savedPerson=>{
-        res.json(savedPerson.toJSON());
+        name: body.name,
+        number: body.number
     })
 
 
-   
+    person.save()
+        .then(savedPerson => {
+            res.json(savedPerson.toJSON());
+        })
+        .catch(error => {
+
+            next(error)
+        })
 
 })
+
+app.put('/api/persons/:id', (req, res, next) => {
+
+    const body = req.body;
+
+
+    if (body.number < 10000000) {
+        res.status(400).json({ error: 'Wrong number length' })
+    }
+
+    const person = {
+        name: body.name,
+        number: body.number
+    }
+
+    Person.findByIdAndUpdate(req.params.id, person, { new: true })
+        .then(result => res.json(result))
+
+})
+
+const errorHandler = (error, request, response, next) => {
+    console.log(error.name);
+
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+        return response.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message })
+    }
+
+    next(error)
+}
+
+app.use(errorHandler)
+
 
 const PORT = process.env.PORT || 3001
 
