@@ -31,13 +31,24 @@ const App = () => {
         />
       }
       <h2>Phonebook</h2>
-      <Filter filter={filter} updateFilter={setFilter} />
+      <Filter
+        filter={filter}
+        updateFilter={setFilter}
+      />
 
       <h2>Add a new</h2>
-      <PersonForm updatePersons={setPersons} updateNotification={setNotificationMessage} />
+      <PersonForm
+        updatePersons={setPersons}
+        updateNotification={setNotificationMessage}
+      />
 
       <h2>Numbers</h2>
-      <Persons filter={filter} persons={persons} updatePersons={setPersons} updateNotification={setNotificationMessage} />
+      <Persons
+        filter={filter}
+        persons={persons}
+        updatePersons={setPersons}
+        updateNotification={setNotificationMessage}
+      />
     </div>
   )
 }

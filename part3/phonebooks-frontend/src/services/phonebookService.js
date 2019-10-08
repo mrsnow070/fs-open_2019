@@ -5,7 +5,6 @@ const baseUrl = '/api/persons';
 export const getAll = () => {
     return axios.get(baseUrl)
         .then(resp => resp.data)
-        .catch(error => console.log('fail ', error));
 }
 
 export const postAddEntry = (data) => {

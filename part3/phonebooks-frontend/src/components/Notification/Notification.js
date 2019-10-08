@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 
 const Notification = ({ message, type, setter }) => {
-    
+
     let className = ['announce']
     useEffect(() => {
         setTimeout(() => {
-            
             setter({ type: null, message: '' })
-        }, 4000)
+        }, 10000)
     }, [message, setter, className, type])
 
     if (type === 'error') {

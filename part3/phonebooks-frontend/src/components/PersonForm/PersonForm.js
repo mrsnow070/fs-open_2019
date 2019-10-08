@@ -16,22 +16,46 @@ export default ({ updatePersons, updateNotification }) => {
 
         getByName(newName).then(data => {
             if (data.length === 0) {
-                //не существует такого
                 postAddEntry({ name: newName, number: newNumber })
                     .then(resp => {
-                        updateNotification({ type: 'notification', message: `Added ${newName}` })
+                        updateNotification({
+                            type: 'notification',
+                            message: `Added ${newName}`
+                        })
                         getAll()
                             .then(resp => updatePersons(resp));
                         return [setNewName(''), setNewNumber('')];
-                    });
+                    })
+                    .catch(error => {
+                        updateNotification({
+                            type: 'error',
+                            message: error.response.data.error
+                        })
+
+                    })
+                    ;
             } else {
                 if (window.confirm(`${newName} is already added to phonebook. Replace old number with a new one?`)) {
-                    putUpdateNumber(data[0].id, { ...data[0], number: newNumber })
+                    putUpdateNumber(data[0].id, {
+                        ...data[0],
+                        number: newNumber
+                    })
                         .then(resp => {
-                            updateNotification({ type: 'notification', message: `Number ${newName} is changed` });
+
+                            updateNotification({
+                                type: 'notification',
+                                message: `Number ${newName} is changed`
+                            });
                             getAll()
                                 .then(resp => updatePersons(resp));
                             return [setNewName(''), setNewNumber('')];
+                        })
+                        .catch(err => {
+                            console.log(err.response)
+                            updateNotification({
+                                type: 'error',
+                                message: err.response.data.error
+                            })
                         })
                 }
             }
@@ -42,10 +66,16 @@ export default ({ updatePersons, updateNotification }) => {
     return (
         <form onSubmit={submitHandler}>
             <div>
-                name: <input value={newName} onChange={inputNameHandler} />
+                name: <input
+                    value={newName}
+                    onChange={inputNameHandler}
+                />
             </div>
             <div>
-                number: <input value={newNumber} onChange={inputNumberHandler} />
+                number: <input
+                    value={newNumber}
+                    onChange={inputNumberHandler}
+                />
             </div>
             <div>
                 <button type="submit">add</button>
