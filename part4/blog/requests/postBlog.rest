@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+
+{
+    "title":"Hello world",
+    "author":"Unknown",
+    "url":"https://en.wikipedia.org/wiki/Blog",
+    "likes":9999
+}
