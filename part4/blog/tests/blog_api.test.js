@@ -1,3 +1,4 @@
+// @ts-nocheck
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
@@ -82,7 +83,7 @@ test('delete by id', async () => {
     const beforeDelete = await helperTest.getBlogData();
 
     await api.delete(`/api/blogs/${beforeDelete[0].id}`)
-    .expect(204);
+        .expect(204);
 
     const test = await Blog.findById(beforeDelete[0].id);
 
