@@ -1,6 +1,7 @@
 const blogRouter = require('express').Router();
 const Blog = require('../models/blog');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken')
 
 blogRouter.get('/', async (req, res) => {
     const result = await Blog
@@ -16,12 +17,20 @@ blogRouter.get('/', async (req, res) => {
 blogRouter.post('/', async (req, res, next) => {
     const body = req.body;
 
-    const user = await User.findById(body.userId)
-    if (!(req.body.title && req.body.url)) {
-        res.status(400).send({error:"wrong title or url length"}).end()
-    }
+    const token = req.token;
 
     try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'token missing or invalid' })
+        }
+
+        const user = await User.findById(decodedToken.id);
+
+        if (!(req.body.title && req.body.url)) {
+            return res.status(400).send({ error: "wrong title or url length" }).end()
+        }
+
         const blog = new Blog({
             title: body.title,
             author: body.author,
@@ -37,26 +46,30 @@ blogRouter.post('/', async (req, res, next) => {
     } catch (exception) {
         next(exception)
     }
-
-
-
-
-
-    // if (req.body.title || req.body.url) {
-    //     let savedBlog = await blog.save()
-
-    //     // user.blogs = user.blogs.concat(savedBlog._id);
-
-    //     // await user.save();
-
-    // }
-
-
 })
 
-blogRouter.delete('/:id', async (req, res) => {
-    const result = await Blog.findByIdAndRemove(req.params.id);
-    res.status(204).json(result).end();
+blogRouter.delete('/:id', async (req, res, next) => {
+    // const body = req.body;
+    const token = req.token;
+    const deletingId = req.params.id;
+
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'token missing or invalid' })
+        }
+
+        const creatorId = await Blog.findById(deletingId)
+
+        if (decodedToken.id === creatorId.user.toString()) {
+            const result = await Blog.findByIdAndRemove(req.params.id);
+            res.status(204).json(result).end();
+        } else {
+            res.status(401).json({ error: 'Wrong token' }).end();
+        }
+    } catch (exception) {
+        next(exception)
+    }
 })
 
 blogRouter.put('/:id', async (req, res) => {
