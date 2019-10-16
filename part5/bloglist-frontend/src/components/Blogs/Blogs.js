@@ -3,6 +3,8 @@ import Header from '../Header';
 import Blog from './Blog/Blog';
 import BlogForm from './BlogForm';
 import { getAll as getAllBlogs } from '../../services/blogs';
+import Toggable from '../../components/Togglable';
+
 
 export default ({ user, setUser, notificationSetter }) => {
     const [blogs, setBlogs] = useState([]);
@@ -14,7 +16,9 @@ export default ({ user, setUser, notificationSetter }) => {
 
     const getData = async () => {
         try {
-            setBlogs(await getAllBlogs())
+            const response = await getAllBlogs();
+            response.sort((a, b) => b.likes - a.likes)
+            setBlogs(response)
         }
         catch (exception) {
             console.log(exception);
@@ -22,18 +26,25 @@ export default ({ user, setUser, notificationSetter }) => {
     }
 
     const logout = () => {
-        window.localStorage.removeItem('loggedUser');
         setUser(null);
+        window.localStorage.removeItem('loggedUser');
     }
-
-
 
     return (
         <div>
             <Header text="Blogs" />
             <p>{user} logged in <button onClick={logout}>logout</button></p>
-            <BlogForm notificationSetter={notificationSetter} blogs={blogs} blogSetter={setBlogs} />
-            {blogs.map(blog => <Blog blog={blog} key={blog.id} />)}
+            <Toggable buttonLabel="New note">
+                <BlogForm
+                    notificationSetter={notificationSetter}
+                    updateBlog={getData}
+                />
+            </Toggable>
+            {blogs.map(blog => <Blog
+                updateBlogs={getData}
+                notificationSetter={notificationSetter}
+                blog={blog}
+                key={blog.id} />)}
         </div>
     )
 };

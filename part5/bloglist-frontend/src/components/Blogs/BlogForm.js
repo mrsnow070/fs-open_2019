@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Header'
-import { postBlog } from '../../services/blogs';
+import { postBlog, setToken } from '../../services/blogs';
 
-const BlogForm = ({ blogs, blogSetter, notificationSetter }) => {
+const BlogForm = ({ updateBlog, notificationSetter }) => {
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [url, setUrl] = useState('');
+
+    useEffect(() => {
+        const loggedUserJSON = window.localStorage.getItem('loggedUser');
+        if (loggedUserJSON) {
+            const user = JSON.parse(loggedUserJSON);
+            setToken(user.token);
+        }
+    }, [])
+
 
     const handleInput = (e, setter) => {
         setter(e.target.value)
@@ -15,8 +24,8 @@ const BlogForm = ({ blogs, blogSetter, notificationSetter }) => {
         e.preventDefault();
 
         try {
-            const result = await postBlog({ title, author, url });
-            blogSetter(blogs.concat(result.data));
+            const result = await postBlog({ title, author, url, });
+            await updateBlog();
             notificationSetter({
                 type: 'notification',
                 message: `New blog ${result.data.title} by ${result.data.author} added`

@@ -35,8 +35,8 @@ blogRouter.post('/', async (req, res, next) => {
             title: body.title,
             author: body.author,
             url: body.url,
-            likes: body.likes,
-            user: user._id
+            likes: body.likes||0,
+            user: user.id
         })
         let savedBlog = await blog.save()
         user.blogs = await user.blogs.concat(savedBlog.id)
