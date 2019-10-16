@@ -1,0 +1,12 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5FVyBST09UIiwiaWQiOiI1ZGE1Nzk1YjE4MDFlNjE4ZDA4MDYxZDkiLCJpYXQiOjE1NzExMjU2MTV9.v532ukeqmEdZikpbC8LWtCbyfesnKJLRGJ2tKELl2Mo
+
+
+{
+    "title":"Strang",
+    "author":"a2",
+    "url":"https://en.wikipedia.org/wiki/Blog",
+    "likes":5,
+    "userId":"5da24d720bedd024282af01a"
+}
