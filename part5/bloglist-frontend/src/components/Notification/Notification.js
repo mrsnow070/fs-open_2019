@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types'
+
 import './Notification.css';
 
 const Notification = ({ message, type, setter }) => {
@@ -30,4 +32,10 @@ const Notification = ({ message, type, setter }) => {
     )
 }
 
+Notification.propTypes = {
+    message: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+}
+
 export default Notification;
+
