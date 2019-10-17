@@ -9,7 +9,7 @@ export const getAll = () => {
   return request.then(response => response.data)
 }
 
-export const postBlog = async (newBlog) => {
+export const create = async (newBlog) => {
   const config = {
     headers: { Authorization: token }
   }
@@ -18,13 +18,13 @@ export const postBlog = async (newBlog) => {
   return response
 }
 
-export const putLike = async (id, like) => {
-  const response = await axios.put(`${baseUrl}/${id}`, like)
+export const update  = async (id, field) => {
+  const response = await axios.put(`${baseUrl}/${id}`, field)
 
   return response;
 }
 
-export const deleteBlog = async (id) => {
+export const remove = async (id) => {
   const config = {
     headers: { Authorization: token }
   }

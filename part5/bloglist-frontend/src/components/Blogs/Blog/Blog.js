@@ -1,5 +1,5 @@
 import React from 'react';
-import { putLike, deleteBlog } from '../../../services/blogs'
+import { update, remove } from '../../../services/blogs'
 
 const Blog = ({ blog, updateBlogs, notificationSetter }) => {
   const [visible, setVisible] = React.useState(false)
@@ -28,7 +28,7 @@ const Blog = ({ blog, updateBlogs, notificationSetter }) => {
   const likeHandler = async () => {
 
     try {
-      await putLike(blog.id, { likes: blog.likes + 1 })
+      await update(blog.id, { likes: blog.likes + 1 })
       await updateBlogs();
     } catch (exception) {
       notificationSetter({
@@ -43,7 +43,7 @@ const Blog = ({ blog, updateBlogs, notificationSetter }) => {
 
     if (window.confirm()) {
       try {
-        await deleteBlog(blog.id);
+        await remove(blog.id);
         await updateBlogs();
         notificationSetter({
           type: 'notification',

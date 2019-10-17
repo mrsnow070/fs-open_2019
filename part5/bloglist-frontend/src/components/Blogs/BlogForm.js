@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Header'
-import { postBlog, setToken } from '../../services/blogs';
+import { create, setToken } from '../../services/blogs';
 
 const BlogForm = ({ updateBlog, notificationSetter }) => {
     const [title, setTitle] = useState('');
@@ -24,7 +24,7 @@ const BlogForm = ({ updateBlog, notificationSetter }) => {
         e.preventDefault();
 
         try {
-            const result = await postBlog({ title, author, url, });
+            const result = await create({ title, author, url, });
             await updateBlog();
             notificationSetter({
                 type: 'notification',
