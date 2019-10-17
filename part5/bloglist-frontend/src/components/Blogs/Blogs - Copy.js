@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header';
 import Blog from './Blog/Blog';
 import BlogForm from './BlogForm';
-import { getAll } from '../../services/blogs';
+import { getAll as getAllBlogs } from '../../services/blogs';
 import Toggable from '../../components/Togglable';
 
 
@@ -16,7 +16,7 @@ export default ({ user, setUser, notificationSetter }) => {
 
     const getData = async () => {
         try {
-            const response = await getAll();
+            const response = await getAllBlogs();
             response.sort((a, b) => b.likes - a.likes)
             setBlogs(response)
         }
