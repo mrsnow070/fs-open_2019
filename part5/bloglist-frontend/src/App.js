@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import LoginForm from './components/LoginForm';
 import Blogs from './components/Blogs/Blogs'
 import { setToken } from './services/blogs';
@@ -7,12 +7,12 @@ import Notification from './components/Notification/Notification';
 
 function App() {
   const [user, setUser] = useState(null);
-  
+
   const [notificationMessage, setNotificationMessage] = useState({
     type: null,
     message: ''
   })
- 
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser');
     if (loggedUserJSON) {

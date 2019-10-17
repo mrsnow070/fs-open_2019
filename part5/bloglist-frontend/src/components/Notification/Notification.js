@@ -22,9 +22,6 @@ const Notification = ({ message, type, setter }) => {
         return null
     }
 
-
-
-
     return (
         <div className={className.join(' ')}>
             {message}

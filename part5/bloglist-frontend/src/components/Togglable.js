@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-const Togglable = (props, ref) => {
+const Togglable = (props) => {
     const [visible, setVisible] = useState(false)
     
   
