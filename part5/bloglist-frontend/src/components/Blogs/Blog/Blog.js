@@ -1,7 +1,7 @@
 import React from 'react';
-import { update, remove } from '../../../services/blogs'
 
-const Blog = ({ blog, updateBlogs, notificationSetter }) => {
+
+const Blog = ({ blog, blogServices, notificationSetter }) => {
   const [visible, setVisible] = React.useState(false)
 
   const clickHandler = () => {
@@ -13,7 +13,7 @@ const Blog = ({ blog, updateBlogs, notificationSetter }) => {
     if (currentUser.name === blog.user.name) {
       return <div>
         <button
-          onClick={deleteHandler}
+          onClick={() => deleteHandler(currentUser.token)}
           style={
             {
               backgroundColor: '#4a94fb',
@@ -28,8 +28,8 @@ const Blog = ({ blog, updateBlogs, notificationSetter }) => {
   const likeHandler = async () => {
 
     try {
-      await update(blog.id, { likes: blog.likes + 1 })
-      await updateBlogs();
+      await blogServices.update(blog.id, { likes: blog.likes + 1 })
+      await blogServices.getAll();
     } catch (exception) {
       notificationSetter({
         type: 'error',
@@ -39,12 +39,12 @@ const Blog = ({ blog, updateBlogs, notificationSetter }) => {
 
   }
 
-  const deleteHandler = async () => {
+  const deleteHandler = async (token) => {
 
     if (window.confirm()) {
       try {
-        await remove(blog.id);
-        await updateBlogs();
+        await blogServices.remove(blog.id, token);
+        await blogServices.getAll();
         notificationSetter({
           type: 'notification',
           message: 'Successfully deleted'

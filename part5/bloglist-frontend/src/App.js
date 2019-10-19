@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LoginForm from './components/LoginForm';
 import Blogs from './components/Blogs/Blogs'
-import { setToken } from './services/blogs';
 import Notification from './components/Notification/Notification';
 
 
@@ -18,10 +17,9 @@ function App() {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
-      setToken(user.token);
+
     } else {
       setUser(null)
-      setToken(null);
     }
   }, [])
 

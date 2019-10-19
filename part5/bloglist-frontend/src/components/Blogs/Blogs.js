@@ -1,29 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from '../Header';
 import Blog from './Blog/Blog';
 import BlogForm from './BlogForm';
-import { getAll } from '../../services/blogs';
 import Toggable from '../../components/Togglable';
+import { useResource } from '../../hooks'
 
 
 export default ({ user, setUser, notificationSetter }) => {
-    const [blogs, setBlogs] = useState([]);
-
-    useEffect(() => {
-        getData();
-    }, [])
-
-
-    const getData = async () => {
-        try {
-            const response = await getAll();
-            response.sort((a, b) => b.likes - a.likes)
-            setBlogs(response)
-        }
-        catch (exception) {
-            console.log(exception);
-        }
-    }
+    const [blogs, blogServices] = useResource('/api/blogs');
 
     const logout = () => {
         setUser(null);
@@ -37,14 +21,18 @@ export default ({ user, setUser, notificationSetter }) => {
             <Toggable buttonLabel="New note">
                 <BlogForm
                     notificationSetter={notificationSetter}
-                    updateBlog={getData}
+                    blogServices={blogServices}
                 />
             </Toggable>
-            {blogs.map(blog => <Blog
-                updateBlogs={getData}
-                notificationSetter={notificationSetter}
-                blog={blog}
-                key={blog.id} />)}
+            {
+                blogs
+                    .sort((a, b) => b.likes - a.likes)
+                    .map(blog => <Blog
+                        blogServices={blogServices}
+                        notificationSetter={notificationSetter}
+                        blog={blog}
+                        key={blog.id} />
+                    )}
         </div>
     )
 };

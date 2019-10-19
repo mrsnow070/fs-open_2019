@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useField } from '../../hooks'
 import Header from '../Header'
-import { create, setToken } from '../../services/blogs';
 
-const BlogForm = ({ updateBlog, notificationSetter }) => {
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [url, setUrl] = useState('');
+const BlogForm = ({ blogServices, notificationSetter }) => {
+    const [token, setToken] = useState(null);
+    const title = useField('text')
+    const author = useField('text')
+    const url = useField('text')
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser');
@@ -15,17 +16,19 @@ const BlogForm = ({ updateBlog, notificationSetter }) => {
         }
     }, [])
 
-
-    const handleInput = (e, setter) => {
-        setter(e.target.value)
-    }
-
     const sendNewBlog = async (e) => {
         e.preventDefault();
 
         try {
-            const result = await create({ title, author, url, });
-            await updateBlog();
+            const result = await blogServices.create({
+                title: title.value,
+                author: author.value,
+                url: url.value
+            }, token);
+            title.onReset()
+            url.onReset()
+            author.onReset()
+            await blogServices.getAll();
             notificationSetter({
                 type: 'notification',
                 message: `New blog ${result.data.title} by ${result.data.author} added`
@@ -44,23 +47,17 @@ const BlogForm = ({ updateBlog, notificationSetter }) => {
             <form onSubmit={(e) => sendNewBlog(e)}>
                 <div>
                     title: <input
-                        type="text"
-                        onChange={(e) => handleInput(e, setTitle)}
-                        value={title}
+                        {...title}
                         name="Title" />
                 </div>
                 <div>
                     author: <input
-                        type="text"
-                        onChange={(e) => handleInput(e, setAuthor)}
-                        value={author}
+                        {...author}
                         name="Author" />
                 </div>
                 <div>
                     url: <input
-                        type="text"
-                        onChange={(e) => handleInput(e, setUrl)}
-                        value={url}
+                        {...url}
                         name="Url" />
                 </div>
                 <button type="submit">create</button>

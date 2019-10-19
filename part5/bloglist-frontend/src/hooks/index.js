@@ -1,17 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const useField = (type) => {
     const [value, setValue] = useState('')
-    const [style, setStyle] = useState({})
 
     const onChange = (event) => {
-        setStyle({ backgroundColor: 'white' })
+
         setValue(event.target.value)
     }
 
     const onReset = () => {
-        setStyle({ backgroundColor: '#fff0f0' })
+
         setValue('')
     }
 
@@ -19,43 +18,70 @@ export const useField = (type) => {
         type,
         value,
         onChange,
-        onReset,
-        style
+        onReset 
     }
 }
 
 export const useResource = (url) => {
+    const [resources, setResources] = useState([])
     const [baseUrl] = useState(url);
-    const [token, setToken] = useState(null)
-    const [config, setConfig] = useState(null);
 
-    const updateConfig = (newToken) => {
-        setToken(`bearer ${newToken}`);
-        setConfig({
+    useEffect(() => {
+        const fetchInitialData = async () => {
+            const response = await axios.get(url);
+            setResources(response.data)
+        }
+
+        fetchInitialData();
+    }, [url])
+
+    const getAll = async () => {
+        const response = await axios.get(baseUrl);
+        setResources(response.data)
+    }
+
+
+    const getConfig = (newToken) => {
+        return {
             headers: {
-                Authorization: token
+                Authorization: `bearer ${newToken}`
             }
-        })
+        }
     }
 
-    const getAll = () => {
-        const request = axios.get(baseUrl)
-        return request.then(response => response.data)
-    }
-
-    const create = async (newBlog) => {
-
-        const response = await axios.post(baseUrl, newBlog, config)
-
+    const create = async (data, token) => {
+        const response = await axios.post(
+            baseUrl,
+            data,
+            getConfig(token)
+        )
         return response
     }
 
+    const update = async (id, data) => {
+        const response = await axios.put(`${baseUrl}/${id}`, data)
 
-
-    return {
-        getAll,
-        create,
-        updateConfig
+        return response;
     }
+
+    const remove = async (id, token) => {
+
+        const response = await axios.delete(
+            `${baseUrl}/${id}`,
+            getConfig(token)
+        )
+        return response
+    }
+
+    const service = {
+        create,
+        getAll,
+        update,
+        remove
+    }
+
+    return [
+        resources, service
+    ]
 }
 
