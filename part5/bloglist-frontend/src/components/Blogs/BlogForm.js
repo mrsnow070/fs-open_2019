@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useField } from '../../hooks'
+import { useField } from '../../hooks/index'
 import Header from '../Header'
 
 const BlogForm = ({ blogServices, notificationSetter }) => {
