@@ -1,12 +1,15 @@
 import React from 'react'
-import { vote } from '../reducers/anecdoteReducer';
+import { connect } from 'react-redux';
+import * as actions from '../store/actions/actions';
 
-export const AnecdoteList = ({ store }) => {
-    let anecdotes = store.getState();
+export const AnecdoteList = (props) => {
+
+    const { store, vote } = props;
+    let anecdotes = store;
+
     anecdotes = anecdotes.sort((a, b) => b.votes - a.votes)
     return (
         <>
-            
             {anecdotes.map(anecdote =>
                 <div key={anecdote.id}>
                     <div>
@@ -14,12 +17,27 @@ export const AnecdoteList = ({ store }) => {
                     </div>
                     <div>
                         has {anecdote.votes}
-                        <button onClick={() => store.dispatch(vote(anecdote.id))}>vote</button>
+                        <button onClick={() => vote(anecdote)}>vote</button>
                     </div>
                 </div>
             )}
         </>
     )
 }
+const mapStateToProps = (state) => {
+    return {
+        store: state.anecdote,
+    }
+}
 
-export default AnecdoteList 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        vote: (anecdote) => {
+            dispatch(actions.vote(anecdote))
+            
+        },
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnecdoteList) 

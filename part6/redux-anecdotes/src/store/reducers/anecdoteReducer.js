@@ -1,3 +1,5 @@
+import *as actionTypes from '../actions/actionTypes'
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -14,22 +16,6 @@ const asObject = (anecdote) => {
     content: anecdote,
     id: getId(),
     votes: 0
-  }
-}
-
-export const vote = (id) => {
-  return {
-    type: 'INCR',
-    payload: {
-      id: id
-    }
-  }
-}
-
-export const create = (data) => {
-  return {
-    type: 'CREATE',
-    payload: data
   }
 }
 
@@ -52,16 +38,14 @@ const addNew = (state, action) => {
 }
 
 const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
+  // console.log('state now: ', state)
+  // console.log('action', action)
   switch (action.type) {
-    case 'INCR': return findById(state, action)
-    case 'CREATE': return addNew(state, action)
+    case actionTypes.INCR: return findById(state, action)
+    case actionTypes.CREATE: return addNew(state, action)
 
     default: return state;
   }
-
-
 
 }
 

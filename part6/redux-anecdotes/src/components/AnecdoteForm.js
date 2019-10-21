@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import { vote, create } from '../reducers/anecdoteReducer';
+import { connect } from 'react-redux'
+import * as actions from '../store/actions/actions';
 
 
-export const AnecdoteForm = ({ store }) => {
+export const AnecdoteForm = ({ addAnecdote }) => {
     const [anecdote, setAnecdote] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        store.dispatch(create(anecdote))
+        addAnecdote(anecdote);
     }
     return (
         <>
@@ -25,4 +26,16 @@ export const AnecdoteForm = ({ store }) => {
     )
 }
 
-export default AnecdoteForm 
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addAnecdote: (data) => {
+            dispatch(actions.create(data))
+            // dispatch(actions.createdNotification(data))
+        }
+
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AnecdoteForm)
