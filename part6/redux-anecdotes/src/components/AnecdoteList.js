@@ -3,9 +3,12 @@ import { connect } from 'react-redux';
 import * as actions from '../store/actions/actions';
 
 export const AnecdoteList = (props) => {
-
-    const { store, vote } = props;
+    const { store, vote, filter } = props;
     let anecdotes = store;
+
+    if (filter.filter.length > 0) {
+        anecdotes = [...props.filter.anecdotes]
+    }
 
     anecdotes = anecdotes.sort((a, b) => b.votes - a.votes)
     return (
@@ -27,6 +30,7 @@ export const AnecdoteList = (props) => {
 const mapStateToProps = (state) => {
     return {
         store: state.anecdote,
+        filter: state.filter
     }
 }
 
@@ -34,7 +38,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         vote: (anecdote) => {
             dispatch(actions.vote(anecdote))
-            
         },
 
     }
