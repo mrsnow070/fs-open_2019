@@ -1,4 +1,4 @@
-import { createdNotification, hideNotification } from './notificationActions';
+import { setNotification } from './notificationActions';
 import axios from 'axios';
 import { getAll } from './fetchActions'
 
@@ -13,11 +13,11 @@ export const create = (data) => {
             const result = await axios
                 .post('http://localhost:3001/anecdotes', dataObj);
 
-            dispatch(createdNotification(result.data.content));
+            dispatch(setNotification(
+                `New anecdote ${result.data.content} has been created`,
+                10
+            ));
 
-            setTimeout(() => {
-                dispatch(hideNotification())
-            }, 5000);
             dispatch(getAll());
 
         } catch (exception) {

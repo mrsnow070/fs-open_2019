@@ -4,6 +4,7 @@ import * as actions from '../store/actions/actions'
 
 export const Filter = ({ anecdotes, updateFilter }) => {
     const [filter, setFilter] = useState('');
+    
     useEffect(() => {
         updateFilter(filter, anecdotes);
     }, [filter, updateFilter, anecdotes])

@@ -26,13 +26,10 @@ export const AnecdoteForm = ({ addAnecdote }) => {
     )
 }
 
-
-
 const mapDispatchToProps = (dispatch) => {
     return {
         addAnecdote: (data) => {
             dispatch(actions.create(data))
-            // dispatch(actions.createdNotification(data))
         }
 
     }

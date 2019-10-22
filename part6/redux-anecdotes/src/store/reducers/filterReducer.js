@@ -20,9 +20,6 @@ const filterHandler = (state, action) => {
     }
 }
 
-
-
-
 export default (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FILTER: return filterHandler(state, action)

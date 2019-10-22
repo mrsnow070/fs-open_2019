@@ -6,15 +6,22 @@ export const hideNotification = () => {
     }
 }
 
-export const voteNotification = (content) => {
-    return {
-        type: actionTypes.NOTIFICATION_VOTE,
-        payload: content
+export const setNotification = (text, time) => {
+
+    return dispatch => {
+        dispatch(notification(text))
+
+        setTimeout(() => {
+            dispatch(hideNotification());
+        }, time * 1000)
     }
 }
-export const createdNotification = (content) => {
+
+const notification = (text) => {
     return {
-        type: actionTypes.NOTIFICATION_CREATED,
-        payload: content
+        type: actionTypes.NOTIFICATION_SHOW,
+        payload: text
     }
 }
+
+ 

@@ -21,11 +21,10 @@ const App = ({ fetchInitData }) => {
   )
 }
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchInitData: () => dispatch(actions.fetchInitState())
-
   }
 }
+
 export default connect(null, mapDispatchToProps)(App)

@@ -17,10 +17,7 @@ const initStateFromDb = (state, action) => {
 }
 
 const reducer = (state = [], action) => {
-  // console.log(action.payload)
-
   switch (action.type) {
-   
     case actionTypes.ADD_VOTE: return findById(state, action)
     case actionTypes.FETCH_INIT_STATE: return initStateFromDb(state, action)
 

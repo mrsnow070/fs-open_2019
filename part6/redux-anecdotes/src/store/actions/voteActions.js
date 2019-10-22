@@ -1,4 +1,4 @@
-import { voteNotification, hideNotification } from './notificationActions';
+import { setNotification } from './notificationActions';
 import { updateOne } from './fetchActions';
 import axios from 'axios';
 
@@ -12,15 +12,12 @@ export const vote = (anecdote) => {
             }
             const result = await axios.put(`http://localhost:3001/anecdotes/${anecdote.id}`, newObj)
             dispatch(updateOne(result.data))
-            dispatch(voteNotification(result.data.content))
-            setTimeout(() => {
-                dispatch(hideNotification())
-            }, 5000)
+            dispatch(setNotification(
+                `you voted ${result.data.content}`,
+                10
+            ));
         } catch (exception) {
             console.log(exception)
         }
-        // dispatch(voteINCR(anecdote.id))
-
-
     }
 }

@@ -6,6 +6,13 @@ export const AnecdoteList = (props) => {
     const { store, vote, filter } = props;
     let anecdotes = store;
 
+    const style = {
+        border: '1px solid black',
+        padding: '5px',
+        marginBottom: '5px',
+        borderRadius: '5px'
+    }
+
     if (filter.filter.length > 0) {
         anecdotes = [...props.filter.anecdotes]
     }
@@ -14,7 +21,8 @@ export const AnecdoteList = (props) => {
     return (
         <>
             {anecdotes.map(anecdote =>
-                <div key={anecdote.id}>
+                <div style={style}
+                    key={anecdote.id}>
                     <div>
                         {anecdote.content}
                     </div>
@@ -38,8 +46,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         vote: (anecdote) => {
             dispatch(actions.vote(anecdote))
-        },
-
+        }
     }
 }
 

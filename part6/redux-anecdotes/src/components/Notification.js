@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 const Notification = ({ notif }) => {
   const style = {
     border: 'solid',
-     
-  
     padding: 10,
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius: '5px'
   }
 
   let notification = null;
