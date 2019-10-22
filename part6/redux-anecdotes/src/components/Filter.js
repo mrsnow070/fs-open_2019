@@ -10,8 +10,6 @@ export const Filter = ({ anecdotes, updateFilter }) => {
 
     const filterHandler = (e) => {
         setFilter(e.target.value)
-
-
     }
 
     return (

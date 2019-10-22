@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AnecdoteForm from './components/AnecdoteForm';
 import AnecdoteList from './components/AnecdoteList';
 import Notification from './components/Notification';
 import Filter from './components/Filter';
+import * as actions from './store/actions/actions';
+import { connect } from 'react-redux'
 
-const App = () => {
+const App = ({ fetchInitData }) => {
+  useEffect(() => {
+    fetchInitData();
+  }, [fetchInitData])
   return (
     <div>
       <Notification />
@@ -16,4 +21,11 @@ const App = () => {
   )
 }
 
-export default App
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchInitData: () => dispatch(actions.fetchInitState())
+
+  }
+}
+export default connect(null, mapDispatchToProps)(App)

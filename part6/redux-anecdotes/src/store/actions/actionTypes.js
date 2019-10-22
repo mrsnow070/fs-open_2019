@@ -1,6 +1,8 @@
-export const INCR = 'INCR';
-export const CREATE = 'CREATE';
+export const FETCH_INIT_STATE = 'FETCH_INIT_STATE';
+export const ADD_VOTE = 'ADD_VOTE';
+
 export const NOTIFICATION_VOTE = 'NOTIFICATION_VOTE';
 export const NOTIFICATION_CREATED = 'NOTIFICATION_CREATED';
 export const NOTIFICATION_HIDE = 'NOTIFICATION_HIDE';
+
 export const FILTER = 'FILTER';
