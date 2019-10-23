@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './Header'
-import { login } from '../services/login';
-import { useField } from '../hooks';
+import Header from '../Header'
+import { login } from '../../services/login';
+import { useField } from '../../hooks';
 
 const LoginForm = ({ setUser, notificationSetter }) => {
     const usernameInput = useField('text');
