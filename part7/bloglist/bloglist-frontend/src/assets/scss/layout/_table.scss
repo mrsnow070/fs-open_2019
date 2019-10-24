@@ -1,0 +1,18 @@
+.tab {
+    cursor: context-menu;
+    &__row:not(:nth-child(even)) {
+        background-color: grey;
+    }
+
+    &__row:hover {
+        background-color: lightblue;
+    }
+
+    &__cell {
+        padding: 0.5rem;
+    }
+
+    &__cell:nth-child(2) {
+        text-align: right;
+    }
+}

@@ -1,15 +1,19 @@
 import React, { useEffect } from 'react';
-import LoginForm from './components/LoginForm/LoginForm';
-import Blogs from './components/Blogs/Blogs'
-import Notification from './components/Notification/Notification';
+import './assets/scss/index.scss';
+
 import { connect } from 'react-redux';
-import actions from './store/actions/actions'
+import actions from './store/actions/actions';
+
+import Layout from './components/hoc/Layout';
+import Users from './components/Users/Users';
+import Blogs from './components/Blogs/Blogs'
+
+import { Route } from 'react-router-dom'
 
 
-function App({ checkLogin, isAuth, user, logout }) {
+function App({ checkLogin }) {
 
   useEffect(() => {
-
     checkLogin()
   }, [checkLogin])
 
@@ -17,32 +21,22 @@ function App({ checkLogin, isAuth, user, logout }) {
 
   return (
     <div className="App">
-      <Notification />
-      {isAuth ?
-        <Blogs
-          user={user.name}
-          logoutFn={logout}
-        />
-        : <LoginForm
-         
-        />}
+      <Layout>
 
+
+        <Route path="/" exact render={() => <Blogs />} />
+        <Route path="/users" render={() => <Users />} />
+      </Layout>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isAuth: state.auth.isAuth,
-    user: state.auth.data
-  }
-}
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
     checkLogin: () => dispatch(actions.authCheckout()),
-    logout: () => dispatch(actions.authLogout())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

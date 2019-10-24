@@ -7,7 +7,6 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const AUTH_CHECK = 'AUTH_CHECK';
 
-
 export const GET_ALL_BLOGS_SUCCESS = 'GET_ALL_BLOGS_SUCCESS';
 export const GET_ALL_BLOGS_FAIL = 'GET_ALL_BLOGS_FAIL';
 export const GET_ALL_BLOGS_CHECK = 'GET_ALL_BLOGS_CHECK';
@@ -18,7 +17,7 @@ export const BLOG_ACTION_FAIL = 'BLOGS_ACTION_FAIL';
 export const BLOG_ACTION_LIKE = 'BLOGS_ACTION_LIKE';
 
 
-// export const CREATE_NEW_BLOG_START = 'CREATE_NEW_BLOG_START';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
+
+
 // export const CREATE_NEW_BLOG_FAIL = 'CREATE_NEW_BLOG_FAIL';
-
-

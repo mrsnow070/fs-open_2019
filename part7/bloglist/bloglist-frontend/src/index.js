@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import notificationReducer from './store/reducers/notificationReducer';
 import authReducer from './store/reducers/authReducer';
 import blogsReducer from './store/reducers/blogsReducer';
+import usersReducer from './store/reducers/usersReducer';
 
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
@@ -15,7 +16,8 @@ const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX
 const rootReducer = combineReducers({
     notif: notificationReducer,
     auth: authReducer,
-    blog: blogsReducer
+    blog: blogsReducer,
+    users: usersReducer
 })
 
 const store = createStore(rootReducer, composeEnhancers(

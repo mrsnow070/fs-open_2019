@@ -1,0 +1,30 @@
+.nav {
+    &__list {
+        display         : flex;
+        list-style      : none;
+        background-color: black;
+
+        &-item {
+            padding: 2rem;
+
+            & a {
+                padding        : 2rem;
+                color          : white;
+                text-decoration: none;
+                text-transform : uppercase;
+            }
+        }
+
+        &-item:hover {
+            background-color: #fff;
+            cursor          : pointer;
+
+            & a {
+                color: green;
+            }
+
+        }
+    }
+
+
+}
