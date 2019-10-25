@@ -6,12 +6,21 @@ const checkValidity = (str) => {
     return /\w{3,}/gi.test(str)
 }
 
+userRouter.get('/:id', async (req, res) => {
+    const { id } = req.params
+
+    const usr = await User.findById(id)
+
+    res.json(usr.toJSON()).end();
+
+    
+})
 
 userRouter.get('/', async (req, res) => {
     const result = await User.find({}).populate('blogs', {
         title: 1,
         author: 1,
-        url:1,
+        url: 1,
     })
 
     res.json(result.map(u => u.toJSON()));

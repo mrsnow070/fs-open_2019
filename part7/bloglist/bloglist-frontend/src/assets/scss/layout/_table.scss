@@ -1,5 +1,6 @@
 .tab {
     cursor: context-menu;
+
     &__row:not(:nth-child(even)) {
         background-color: grey;
     }
@@ -13,6 +14,6 @@
     }
 
     &__cell:nth-child(2) {
-        text-align: right;
+        text-align: center;
     }
 }

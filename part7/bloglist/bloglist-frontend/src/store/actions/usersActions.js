@@ -17,3 +17,20 @@ const setUsers = (users) => {
         payload: users
     }
 }
+
+export const getUser = (id) => {
+    return async dispatch => {
+        const { data } = await axios.get(`${baseUrl}/${id}`)
+        
+
+        dispatch(setUser(data))
+    }
+}
+
+const setUser = (data) => {
+    console.log(data)
+    return {
+        type: actionTypes.SET_USER,
+        payload: data
+    }
+}

@@ -1,7 +1,7 @@
 import { setNotification } from './notificationActions';
 import { auth, authLogout, authCheckout } from './authActions';
 import { getAll, createNewBlog, remove, addLike } from './blogActions';
-import { getAllUsers } from './usersActions';
+import { getAllUsers, getUser } from './usersActions';
 
 export default {
     setNotification,
@@ -12,6 +12,7 @@ export default {
     createNewBlog,
     remove,
     addLike,
-    getAllUsers
+    getAllUsers,
+    getUser
 
 }

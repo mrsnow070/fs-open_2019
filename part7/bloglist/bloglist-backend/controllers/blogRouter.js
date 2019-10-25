@@ -35,7 +35,7 @@ blogRouter.post('/', async (req, res, next) => {
             title: body.title,
             author: body.author,
             url: body.url,
-            likes: body.likes||0,
+            likes: body.likes || 0,
             user: user.id
         })
         let savedBlog = await blog.save()
@@ -59,10 +59,15 @@ blogRouter.delete('/:id', async (req, res, next) => {
             return res.status(401).json({ error: 'token missing or invalid' })
         }
 
+
         const creatorId = await Blog.findById(deletingId)
 
         if (decodedToken.id === creatorId.user.toString()) {
             const result = await Blog.findByIdAndRemove(req.params.id);
+            const user = await User.findById(decodedToken.id);
+            user.blogs = user.blogs.filter(item => item.toString() !== deletingId)
+
+            user.save();
             res.status(204).json(result).end();
         } else {
             res.status(401).json({ error: 'Wrong token' }).end();
