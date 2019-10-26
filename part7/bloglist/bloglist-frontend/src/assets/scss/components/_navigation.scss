@@ -7,9 +7,28 @@
         &-item {
             padding: 2rem;
 
+            &--user {
+                color     : white;
+                align-self: center;
+                margin-left: auto;
+                margin-right: 2rem;
+            }
+
+            &--logout{
+                padding: .5rem;
+                border-radius: 3px;
+                cursor: pointer;
+                margin-left: 5px;
+                color:white;
+                background-color: black;
+                
+            }
+
+            color:white;
+
             & a {
-                padding        : 2rem;
                 color          : white;
+                padding        : 2rem;
                 text-decoration: none;
                 text-transform : uppercase;
             }

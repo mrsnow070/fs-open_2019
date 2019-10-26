@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import NavItem from './NavItem'
- 
+import { connect } from 'react-redux';
+import actions from '../../store/actions/actions';
 
-export const Navigation = (props) => {
+
+export const Navigation = ({ user, logout }) => {
+    console.log(user)
     const [navItems] = useState([
-         
+
         {
             text: 'Blogs',
             url: '/'
@@ -22,9 +25,32 @@ export const Navigation = (props) => {
             <ul className="nav__list">
                 {/* <li><Link to="/" >Home</Link></li> */}
                 {navigation}
+                {user.token !== null ?
+                    <li className="nav__list-item--user">
+                        {`${user.name} is logged in`}
+                        <button
+                            onClick={logout}
+                            className="nav__list-item--logout">
+                            logout
+                    </button>
+                    </li>
+                    : null
+                }
             </ul>
         </nav>
     )
 }
 
-export default Navigation
+const mapStateToProps = (state, ownProps) => {
+    return {
+        user: state.auth.data
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        logout: () => dispatch(actions.authLogout())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation)
