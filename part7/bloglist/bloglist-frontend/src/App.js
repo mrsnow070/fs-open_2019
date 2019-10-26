@@ -10,6 +10,7 @@ import Blogs from './components/Blogs/Blogs'
 
 import { Route } from 'react-router-dom'
 import SingleUser from './components/Users/SingleUser';
+import SingleBlog from './components/Blogs/Blog/SingleBlog';
 
 
 function App({ checkLogin }) {
@@ -28,7 +29,9 @@ function App({ checkLogin }) {
         <Route path="/" exact render={() => <Blogs />} />
         <Route path="/users/:id" exact render={
           ({ match }) => <SingleUser id={match.params.id} />} />
-        <Route path="/users" exact render={() => <Users />} />
+        <Route path="/blogs/:id" exact render={
+          ({ match }) => <SingleBlog id={match.params.id} />} />
+        <Route path="/users" exact render={() => <Users/>} />
       </Layout>
     </div>
   );

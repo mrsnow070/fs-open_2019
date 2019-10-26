@@ -58,7 +58,7 @@ export const createNewBlog = (data, token) => {
         try {
             const result = await axios.post(baseUrl, data, getConfig(token));
             dispatch(getAll())
-            dispatch(setNotification('notification', `New blog ${result.data.title} by ${result.data.author} added`))
+            dispatch(setNotification('notification', `New blog ${result.data.title} added`))
 
         } catch (exception) {
             dispatch(setNotification('error', exception.response.data.error))
@@ -74,15 +74,14 @@ export const remove = (id, token) => {
     return async dispatch => {
         dispatch(blogStartAction());
         try {
-            const response = await axios.delete(
-                `/api/blogs/${id}`,
-                getConfig(token)
-            )
-            dispatch(getAll())
-            console.log(response.data);
-
-            dispatch(setNotification('notification', `Entry successefuly deleted`))
-
+            if (window.confirm()) {
+                await axios.delete(
+                    `/api/blogs/${id}`,
+                    getConfig(token)
+                )
+                dispatch(getAll())
+                dispatch(setNotification('notification', `Entry successefuly deleted`))
+            }
         } catch (exception) {
             console.log(exception.response);
 

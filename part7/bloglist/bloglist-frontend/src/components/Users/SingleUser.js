@@ -1,37 +1,58 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import actions from '../../store/actions/actions';
 import Header from '../Header';
+import { Link } from 'react-router-dom'
 
-export const Single_User = ({ getUser, id, user }) => {
-    console.log(user)
+export const SingleUser = ({ getUser, id, user, loading, blogs }) => {
+    const blogList = blogs.filter(b => b.user.id === id)
+
     useEffect(() => {
-        getUser(id)
-    }, [getUser, id])
+        getUser()
+    }, [getUser])
+
+    let sUser = <>loading...</>
+    if (!loading) {
+        sUser = <>
+            <Header text={user.username} />
+
+            <h2>added blogs</h2>
+
+            <ul className="blog-list">
+                {blogList.map(b =>
+                    <li
+                        key={b.id}
+                        className="blog-list__item"
+                    >
+                        <Link className="blog-list__item--link" to={`/blogs/${b.id}`}>
+                            {b.title}
+                        </Link>
+                    </li>
+                )}
+            </ul>
+        </>
+    }
+
     return (
         <div>
-            <Header text={user.username} />
-            Single_User_ID={id} <br />
-            User:{user.name}<br />
-            Username:{user.username}
-            <ol>
-                {user.blogs.map(blog => <li key={blog}>{blog}</li>)}
-            </ol>
+            {sUser}
         </div>
     )
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        getUser: (id) => dispatch(actions.getUser(id))
+        getUser: () => dispatch(actions.getUser(ownProps.id))
 
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     return {
-        user: state.users.singleUser
+        user: state.users.singleUser,
+        blogs: state.blog.blogs,
+        loading: state.users.loading
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Single_User)
+export default connect(mapStateToProps, mapDispatchToProps)(SingleUser)

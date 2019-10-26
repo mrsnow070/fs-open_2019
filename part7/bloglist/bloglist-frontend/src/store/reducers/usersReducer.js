@@ -7,28 +7,36 @@ const initialState = {
         id: '',
         name: '',
         username: ''
-    }
+    },
+    loading: true
 }
 
 const setUsers = (state, action) => {
     return {
         ...state,
         users: action.payload,
+        loading: false
     }
 }
 
 const setOneUser = (state, action) => {
-    console.log(action)
+
     return {
         ...state,
-        singleUser: action.payload
+        singleUser: action.payload,
+        loading: false
     }
+}
+
+const resetUser = (state, action) => {
+    return initialState
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_ALL_USERS: return setUsers(state, action)
         case actionTypes.SET_USER: return setOneUser(state, action)
+        case actionTypes.RESET_USER: return resetUser(state, action)
 
         default:
             return state

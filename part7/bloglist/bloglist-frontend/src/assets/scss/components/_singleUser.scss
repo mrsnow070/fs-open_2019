@@ -1,0 +1,24 @@
+.blog-list {
+    list-style-type: none;
+    max-width      : 32rem;
+
+    &__item {
+
+        padding         : 1rem;
+        background-color: #dddddd;
+
+    }
+
+    &__item--link {
+        padding: 1rem;
+        cursor : pointer;
+    }
+
+    &__item:not(:last-child) {
+        margin-bottom: 5px;
+    }
+
+    &__item:hover {
+        background-color: #eeeeee;
+    }
+}

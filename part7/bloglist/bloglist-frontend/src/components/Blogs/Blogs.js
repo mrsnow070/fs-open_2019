@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import Header from '../Header';
-import Blog from './Blog/Blog';
 import BlogForm from './BlogForm';
 import Toggable from '../../components/Togglable';
 import { connect } from 'react-redux';
 import actions from '../../store/actions/actions';
 import LoginForm from '../LoginForm/LoginForm';
+import { Link } from 'react-router-dom'
 
 const Blogs = ({
     user,
@@ -26,14 +26,18 @@ const Blogs = ({
             <BlogForm
             />
         </Toggable>
-        {
-            blogs
-                .map(
-                    blog => <Blog
-                        isLoading={loading}
-                        blog={blog}
-                        key={blog.id} />
-                )}
+        <ul className="blog-list">
+            {
+                blogs
+                    .map(blog =>
+                        <li key={blog.id} className="blog-list__item">
+                            <Link className="blog-list__item--link" to={`/blogs/${blog.id}`}>
+                                {blog.title}
+                            </Link>
+                        </li>
+
+                    )}
+        </ul>
     </div>
 
     return (

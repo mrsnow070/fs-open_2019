@@ -20,6 +20,7 @@ export const BLOG_ACTION_LIKE = 'BLOGS_ACTION_LIKE';
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const GET_USER = 'GET_USER';
 export const SET_USER = 'SET_USER';
+export const RESET_USER = 'RESET_USER'
 
 
 // export const CREATE_NEW_BLOG_FAIL = 'CREATE_NEW_BLOG_FAIL';
