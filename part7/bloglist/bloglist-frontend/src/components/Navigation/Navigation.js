@@ -5,7 +5,6 @@ import actions from '../../store/actions/actions';
 
 
 export const Navigation = ({ user, logout }) => {
-    console.log(user)
     const [navItems] = useState([
 
         {
@@ -23,7 +22,6 @@ export const Navigation = ({ user, logout }) => {
     return (
         <nav className="nav">
             <ul className="nav__list">
-                {/* <li><Link to="/" >Home</Link></li> */}
                 {navigation}
                 {user.token !== null ?
                     <li className="nav__list-item--user">

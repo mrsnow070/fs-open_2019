@@ -1,0 +1,13 @@
+POST http://localhost:3003/api/comment
+Content-Type: application/json
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNub3ciLCJpZCI6IjVkYjI4ZTNhNmU3NjUxMWY0NDQwZTA1MCIsImlhdCI6MTU3MjE2OTQ3MX0.lHkDmMK3h7rJ8T8D2AmIE67Iky-M5XzCVcsNjtGhZ9c
+
+
+{
+    "comment":"NEW_SUB_COMMENT",
+    "userId":"5db28e3a6e76511f4440e050",
+    "blogId": "5db28d2d6e76511f4440e04a",
+    "sub": {
+        "comment_id":"5db6ab5e6b9a5f2168955930"
+    }
+}

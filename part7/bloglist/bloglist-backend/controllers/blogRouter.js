@@ -9,6 +9,11 @@ blogRouter.get('/', async (req, res) => {
         .populate('user', {
             username: 1,
             name: 1
+        }).populate('comments', {
+            comment: 1,
+            date: 1,
+            likes: 1,
+            user: 1
         })
     res.json(result)
 

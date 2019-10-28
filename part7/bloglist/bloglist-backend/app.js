@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const blogRoutes = require('./controllers/blogRouter');
 const userRoutes = require('./controllers/userRouter');
 const loginRoutes = require('./controllers/login');
+const commentRoutes = require('./controllers/commentRouter');
 const app = express();
 const config = require('./utils/config');
 const { getTokenFrom } = require('./utils/middleware');
@@ -21,5 +22,6 @@ app.use(bodyParser.json())
 app.use('/api/blogs', blogRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/login', loginRoutes)
+app.use('/api/comment', commentRoutes)
 
 module.exports = app;
