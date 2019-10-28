@@ -1,0 +1,53 @@
+.comment {
+    margin   : 1rem auto;
+    max-width: 71.25rem;
+
+    &:not(:last-child) {
+        margin-bottom: .5rem;
+    }
+
+    border-left : 2px solid gray;
+    padding-left: .5rem;
+
+    &__header {
+        display        : flex;
+        padding        : .3rem;
+        justify-content: space-between;
+
+        & :not(:last-child) {
+            margin-right: .5rem;
+        }
+
+        &-user {
+            a {
+                color      : black;
+                font-weight: 700;
+            }
+        }
+
+        &-date {
+            margin-left : auto;
+            margin-right: 2rem;
+
+            &--time {
+                margin-left: 1rem;
+            }
+        }
+    }
+
+    &__body {
+        padding: 1rem;
+    }
+
+    &__footer {
+        display       : flex;
+        flex-direction: row-reverse;
+
+        &-button {
+            padding         : .5rem;
+            border-radius   : 3px;
+            background-color: white;
+            text-transform  : uppercase;
+        }
+    }
+}

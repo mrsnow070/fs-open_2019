@@ -23,8 +23,7 @@ const Blogs = ({
         <Header text="Blogs" />
         <p>{user} logged in <button onClick={logoutFn}>logout</button></p>
         <Toggable buttonLabel="New note">
-            <BlogForm
-            />
+            <BlogForm />
         </Toggable>
         <ul className="blog-list">
             {

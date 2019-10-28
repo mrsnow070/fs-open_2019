@@ -4,7 +4,6 @@ Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNub3
 
 
 {
-    "comment":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab voluptate quas facere optio consequuntur maxime iure error pariatur debitis. Magnam a laboriosam ipsam nulla tenetur dolorem nobis unde voluptatum quo!",
-    "userId":"5db28e3a6e76511f4440e050",
+    "comment":"хуйня какая-то, рили, ты просто прочитай эт",
     "blogId": "5db28d2d6e76511f4440e04a"    
 }

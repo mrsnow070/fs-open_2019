@@ -8,13 +8,8 @@ const commentSchema = new mongoose.Schema({
     user: {
         userId: String,
         username: String
-    },
-    subComment: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Comment'
-        }
-    ]
+    }
+    
 })
 
 commentSchema.set('toJSON', {

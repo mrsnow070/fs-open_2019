@@ -33,22 +33,11 @@ commentRouter.post('/', async (req, res) => {
                 username: user.username
             }
         })
-        if (body.sub !== undefined) {
-            let comment = await Comment.findById(body.sub.comment_id)
-            const savedComment = await cmnt.save()
-            comment.subComment = comment.subComment.concat(savedComment.id);
-            const result = await comment.save();
-            console.log(result)
-            return res.status(201).json(result).end();
 
-        } else {
-            const savedComment = await cmnt.save()
-            blog.comments = blog.comments.concat(savedComment.id)
-            const result = await blog.save();
-            return res.status(201).json(result).end();
-
-        }
-
+        const savedComment = await cmnt.save()
+        blog.comments = blog.comments.concat(savedComment.id)
+        const result = await blog.save();
+        return res.status(201).json(result).end();
 
     } catch (exception) {
         console.log(exception)
@@ -59,12 +48,7 @@ commentRouter.post('/', async (req, res) => {
 })
 
 commentRouter.get('/', async (req, res) => {
-    const result = await Comment.find({}).populate('subComment', {
-        comment: 1,
-        date: 1,
-        likes: 1,
-        user: 1
-    })
+    const result = await Comment.find({})
     res.json(result)
 })
 

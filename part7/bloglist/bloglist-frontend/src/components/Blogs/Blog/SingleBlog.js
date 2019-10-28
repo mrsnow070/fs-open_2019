@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import actions from '../../../store/actions/actions';
 import Header from '../../Header';
 import { useHistory } from 'react-router-dom'
+import { Comments } from '../Comments/Comments';
 
 
 export const SingleBlog = ({
@@ -47,6 +48,7 @@ export const SingleBlog = ({
                     : null
                 }
             </ul>
+            <Comments comments={blog.comments} blogId={blog.id} />
         </>
     }
 
