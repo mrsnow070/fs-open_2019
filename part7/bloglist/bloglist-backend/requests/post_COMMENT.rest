@@ -4,6 +4,6 @@ Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNub3
 
 
 {
-    "comment":"хуйня какая-то, рили, ты просто прочитай эт",
-    "blogId": "5db28d2d6e76511f4440e04a"    
+    "comment":"this comment would be with authenticated user",
+    "blogId": "5db74e75e92dd605cca24716"    
 }

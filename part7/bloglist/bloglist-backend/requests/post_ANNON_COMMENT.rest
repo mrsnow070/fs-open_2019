@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/comment/annon
+Content-Type: application/json
+
+{
+    "comment":"this comment would be anon",
+    "blogId": "5db74e75e92dd605cca24716"    
+}

@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const commentSchema = new mongoose.Schema({
     comment: String,
     date: Date,
-    likes: Number,
     user: {
         userId: String,
         username: String

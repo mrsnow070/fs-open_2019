@@ -9,7 +9,7 @@ export const SingleComment = ({ data }) => {
         <div className="comment">
             <div className="comment__header">
                 <div className="comment__header-user">
-                    <Link to={`/users/${data.user.userId}`}>{data.user.username}</Link>
+                    {data.user === undefined ? 'Anonymous' : <Link to={`/users/${data.user.userId}`}>{data.user.username}</Link>}
                 </div>
                 <div className="comment__header-date">
                     {`${date.toLocaleDateString()}`}

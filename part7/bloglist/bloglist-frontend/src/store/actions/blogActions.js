@@ -5,12 +5,23 @@ import axios from 'axios';
 const baseUrl = '/api/blogs';
 
 export const addComment = (data, token) => {
-    return async dispatch => {
-        try {
-            await axios.post('/api/comment', data, getConfig(token))
-            dispatch(getAll())
-        } catch ({ response }) {
-            console.log(response)
+    if (token) {
+        return async dispatch => {
+            try {
+                await axios.post('/api/comment', data, getConfig(token))
+                dispatch(getAll())
+            } catch ({ response }) {
+                console.log(response)
+            }
+        }
+    } else {
+        return async dispatch => {
+            try {
+                await axios.post('/api/comment/annon', data)
+                dispatch(getAll())
+            } catch ({ response }) {
+                console.log(response)
+            }
         }
     }
 }

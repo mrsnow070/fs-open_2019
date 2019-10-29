@@ -43,7 +43,7 @@ export const SingleBlog = ({
         content = <>
             <ul className="blog-list">
                 <li className="blog-list__item blog-list__item--title">{blog.title}</li>
-                
+
                 <li className="blog-list__item blog-list__item--header">
                     <a target="_blank" rel="noopener noreferrer" href={blog.url}> {blog.url}</a>
                     <span>{blog.likes} likes <button className="btn" onClick={() => like({ likes: blog.likes + 1 })}>Upvote</button> </span>
@@ -58,7 +58,7 @@ export const SingleBlog = ({
                     }
                 </li>
             </ul>
-            <Comments comments={blog.comments} blogId={blog.id} />
+            <Comments comments={blog.comments} />
             <div className="comment-add">
                 <div>
                     <textarea
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         getBlogs: () => dispatch(actions.getAll()),
         like: (data) => dispatch(actions.addLike(ownProps.id, data)),
         removeBlog: (token) => dispatch(actions.remove(ownProps.id, token)),
-        addComment: (data, token) => dispatch(actions.addComment(data, token))
+        addComment: (data, token) => dispatch(actions.addComment(data, token)),
     }
 }
 

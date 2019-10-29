@@ -26,7 +26,6 @@ commentRouter.post('/', async (req, res) => {
         const cmnt = new Comment({
             comment: body.comment,
             date: new Date(),
-            likes: body.likes || 0,
             // @ts-ignore
             user: {
                 userId: user.id,
@@ -45,6 +44,27 @@ commentRouter.post('/', async (req, res) => {
 
 
 
+})
+
+commentRouter.post('/annon', async (req, res) => {
+    const { body } = req;
+
+    try {
+        const cmnt = new Comment({
+            comment: body.comment,
+            date: new Date(),
+            // @ts-ignore
+            user: null
+        })
+
+        const blog = await Blog.findById(body.blogId);
+        const savedComment = await cmnt.save();
+        blog.comments = blog.comments.concat(savedComment.id)
+        await blog.save();
+        res.status(201).end();
+    } catch (exception) {
+        console.log(exception)
+    }
 })
 
 commentRouter.get('/', async (req, res) => {
