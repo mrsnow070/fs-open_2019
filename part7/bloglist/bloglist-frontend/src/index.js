@@ -11,6 +11,8 @@ import blogsReducer from './store/reducers/blogsReducer';
 import usersReducer from './store/reducers/usersReducer';
 
 
+
+// @ts-ignore
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({

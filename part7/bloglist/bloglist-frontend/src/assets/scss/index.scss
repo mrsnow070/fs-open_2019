@@ -3,7 +3,12 @@
 
 //layout
 @import './layout/table.scss';
+@import './layout/button';
+@import './layout/backdrop';
 
 //components
 @import './components/singleUser';
-@import './components/comment'
+@import './components/comment';
+@import './components/singleBlog';
+@import './components/_blog-form';
+@import './components/notification';

@@ -1,9 +1,8 @@
 import React from 'react'
 import SingleComment from './SingleComment'
 
-export const Comments = ({ comments, blogId }) => {
+export const Comments = ({ comments }) => {
 
-    console.log(comments)
 
     let content = <div>No comments here, you can be first</div>
 

@@ -14,7 +14,7 @@ const showNotification = (state, action) => {
     }
 }
 
-const hideNotification = (state, action) => {
+const hideNotification = () => {
     return initialState
 }
 
@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
         case actionTypes.NOTIFICATION_SHOW: return showNotification(state, action)
-        case actionTypes.NOTIFICATION_HIDE: return hideNotification(state, action)
+        case actionTypes.NOTIFICATION_HIDE: return hideNotification()
 
         default:
             return state

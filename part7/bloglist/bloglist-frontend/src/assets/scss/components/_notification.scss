@@ -1,0 +1,22 @@
+.announce {
+    position        : fixed;
+    padding         : 1rem;
+    top             : .5rem;
+    right           : 2rem;
+    width           : 300px;
+    border          : 1px solid transparent;
+    background-color: lightgrey;
+    padding         : 1rem 2rem;
+    border-radius   : 5px;
+}
+
+.error {
+    color : red;
+    border: 1px solid red;
+
+}
+
+.notification {
+    color : green;
+    border: 1px solid green;
+}

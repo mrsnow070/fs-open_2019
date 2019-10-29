@@ -28,7 +28,7 @@ const setOneUser = (state, action) => {
     }
 }
 
-const resetUser = (state, action) => {
+const resetUser = () => {
     return initialState
 }
 
@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_ALL_USERS: return setUsers(state, action)
         case actionTypes.SET_USER: return setOneUser(state, action)
-        case actionTypes.RESET_USER: return resetUser(state, action)
+        case actionTypes.RESET_USER: return resetUser();
 
         default:
             return state

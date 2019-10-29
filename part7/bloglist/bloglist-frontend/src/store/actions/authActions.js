@@ -41,7 +41,7 @@ const authFail = () => {
 }
 
 const authSuccess = (data) => {
-    window.localStorage.setItem(`loggedUser`, JSON.stringify(data))
+    window.localStorage.setItem('loggedUser', JSON.stringify(data))
 
     return {
         type: actionTypes.AUTH_SUCCESS,

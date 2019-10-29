@@ -1,0 +1,19 @@
+.blog {
+    max-width: 71.25rem;
+    margin   : 1rem auto;
+
+    .blog-list {
+        
+        &__item--header,
+        &__item--creator {
+            display        : flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &__item--title{
+            font-size: 2rem;
+            font-weight: 800;
+        }
+    }
+}

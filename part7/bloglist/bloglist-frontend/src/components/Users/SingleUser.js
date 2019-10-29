@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         user: state.users.singleUser,
         blogs: state.blog.blogs,

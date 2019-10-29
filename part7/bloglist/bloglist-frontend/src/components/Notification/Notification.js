@@ -2,15 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
-import './Notification.css';
-
 const Notification = ({ message, type, show }) => {
     let className = ['announce']
 
     let notification = null;
-
-
-
 
     if (type === 'error') {
         className.push('error')

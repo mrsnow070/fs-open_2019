@@ -4,6 +4,16 @@ import axios from 'axios';
 
 const baseUrl = '/api/blogs';
 
+export const addComment = (data, token) => {
+    return async dispatch => {
+        try {
+            await axios.post('/api/comment', data, getConfig(token))
+            dispatch(getAll())
+        } catch ({ response }) {
+            console.log(response)
+        }
+    }
+}
 
 export const getAll = () => {
     return async dispatch => {
@@ -80,7 +90,7 @@ export const remove = (id, token) => {
                     getConfig(token)
                 )
                 dispatch(getAll())
-                dispatch(setNotification('notification', `Entry successefuly deleted`))
+                dispatch(setNotification('notification', 'Entry successefuly deleted'))
             }
         } catch (exception) {
             console.log(exception.response);

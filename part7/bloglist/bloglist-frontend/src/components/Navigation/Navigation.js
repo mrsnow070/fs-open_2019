@@ -39,13 +39,13 @@ export const Navigation = ({ user, logout }) => {
     )
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         user: state.auth.data
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         logout: () => dispatch(actions.authLogout())
     }

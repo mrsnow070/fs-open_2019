@@ -1,0 +1,32 @@
+.btn {
+    background-color: white;
+    padding         : .5rem;
+    text-transform  : uppercase;
+    text-transform  : uppercase;
+    border-radius   : 5px;
+    outline         : none;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:active,
+    &::selection {
+        transform      : translateY(-1px);
+        box-shadow     : 0 3px 5px;
+        text-decoration: none;
+
+    }
+}
+
+.btn-close {
+    position : absolute;
+    right    : 1rem;
+    top      : .5rem;
+    font-size: 3rem;
+
+    &:hover {
+        color : red;
+        cursor: pointer;
+    }
+}

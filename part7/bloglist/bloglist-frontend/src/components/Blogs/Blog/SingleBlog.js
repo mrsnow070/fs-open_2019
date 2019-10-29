@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import actions from '../../../store/actions/actions';
-import Header from '../../Header';
 import { useHistory } from 'react-router-dom'
 import { Comments } from '../Comments/Comments';
 
@@ -10,50 +9,71 @@ export const SingleBlog = ({
     id,
     getBlogs,
     blogs,
-    loading,
     like,
     token,
     currentUser,
-    removeBlog
+    removeBlog,
+    addComment
 }) => {
     const [blog] = blogs.filter(b => b.id === id)
+    const [newComment, setNewComment] = useState('');
     const history = useHistory();
     let content = <div>loading...</div>
 
     const deleteHandler = () => {
         removeBlog(token);
         history.push('/');
+    }
 
+    const addCommentHandler = () => {
+
+        const data = {
+            comment: newComment,
+            blogId: id
+        }
+        addComment(data, token);
+        setNewComment('');
     }
 
     useEffect(() => {
         getBlogs()
     }, [getBlogs])
 
-    if (!loading && blog) {
+    if (blog) {
         content = <>
-            <Header text={blog.title} />
             <ul className="blog-list">
-                <li className="blog-list__item"><a target="_blank" rel="noopener noreferrer" href={blog.url}> {blog.url}</a></li>
-                <li className="blog-list__item"> {blog.likes} likes <button onClick={() => like({ likes: blog.likes + 1 })}>like</button> </li>
-                <li className="blog-list__item">added by {blog.user.username}</li>
-                {currentUser === blog.user.username ?
-                    <li className="blog-list__item">
-                        <button
-                            onClick={deleteHandler}
-                        >
-                            DELETE
+                <li className="blog-list__item blog-list__item--title">{blog.title}</li>
+                
+                <li className="blog-list__item blog-list__item--header">
+                    <a target="_blank" rel="noopener noreferrer" href={blog.url}> {blog.url}</a>
+                    <span>{blog.likes} likes <button className="btn" onClick={() => like({ likes: blog.likes + 1 })}>Upvote</button> </span>
+                </li>
+                <li className="blog-list__item blog-list__item--creator">added by {blog.user.username}
+                    {currentUser === blog.user.username ?
+
+                        <button className="btn" onClick={deleteHandler}>
+                            delete
                         </button>
-                    </li>
-                    : null
-                }
+                        : null
+                    }
+                </li>
             </ul>
             <Comments comments={blog.comments} blogId={blog.id} />
+            <div className="comment-add">
+                <div>
+                    <textarea
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        className="comment-add__text-area"
+                    />
+                </div>
+                <button onClick={addCommentHandler} className="btn">comment</button>
+            </div>
         </>
     }
 
     return (
-        <div>
+        <div className="blog">
             {content}
         </div>
     )
@@ -63,11 +83,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         getBlogs: () => dispatch(actions.getAll()),
         like: (data) => dispatch(actions.addLike(ownProps.id, data)),
-        removeBlog: (token) => dispatch(actions.remove(ownProps.id, token))
+        removeBlog: (token) => dispatch(actions.remove(ownProps.id, token)),
+        addComment: (data, token) => dispatch(actions.addComment(data, token))
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         blogs: state.blog.blogs,
         loading: state.blog.loading,

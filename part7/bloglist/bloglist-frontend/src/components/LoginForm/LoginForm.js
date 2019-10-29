@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         loading: state.auth.loading
     }

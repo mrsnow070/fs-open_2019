@@ -1,18 +1,14 @@
 import React, { useEffect } from 'react';
 import Header from '../Header';
 import BlogForm from './BlogForm';
-import Toggable from '../../components/Togglable';
 import { connect } from 'react-redux';
 import actions from '../../store/actions/actions';
 import LoginForm from '../LoginForm/LoginForm';
 import { Link } from 'react-router-dom'
 
 const Blogs = ({
-    user,
-    logoutFn,
     getAllBlogs,
     blogs,
-    loading,
     isAuth
 }) => {
     useEffect(() => {
@@ -21,10 +17,8 @@ const Blogs = ({
 
     let content = <div>
         <Header text="Blogs" />
-        <p>{user} logged in <button onClick={logoutFn}>logout</button></p>
-        <Toggable buttonLabel="New note">
-            <BlogForm />
-        </Toggable>
+        <BlogForm />
+
         <ul className="blog-list">
             {
                 blogs
@@ -37,6 +31,9 @@ const Blogs = ({
 
                     )}
         </ul>
+
+        {/* <Toggable buttonLabel="New note">
+        </Toggable> */}
     </div>
 
     return (

@@ -6,9 +6,11 @@ import Navigation from '../Navigation/Navigation';
 
 export const Layout = (props) => (
     <BrowserRouter>
-        <Notification />
-        <Navigation />
-        {props.children}
+        <div className="container">
+            <Notification />
+            <Navigation />
+            {props.children}
+        </div>
     </BrowserRouter>
 )
 

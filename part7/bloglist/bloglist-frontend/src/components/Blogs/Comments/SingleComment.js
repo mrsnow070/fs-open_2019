@@ -5,7 +5,6 @@ export const SingleComment = ({ data }) => {
 
     const date = new Date(data.date)
 
-    console.log(data)
     return (
         <div className="comment">
             <div className="comment__header">
@@ -20,9 +19,7 @@ export const SingleComment = ({ data }) => {
             <div className="comment__body">
                 {data.comment}
             </div>
-            <div className="comment__footer">
-                <button className="comment__footer-button">reply</button>
-            </div>
+
         </div>
     )
 }

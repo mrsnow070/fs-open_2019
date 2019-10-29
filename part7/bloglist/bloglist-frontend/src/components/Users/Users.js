@@ -13,10 +13,16 @@ export const Users = ({ users, getUsers }) => {
         return (
             <tr
                 className="tab__row"
-                key={user.username}
-            >
-                <td className="tab__cell" ><Link className="blog-list__item--link" to={`/users/${user.id}`}>{user.username}</Link></td>
-                <td className="tab__cell" >{user.blogs.length}</td>
+                key={user.username}>
+                <td className="tab__cell" >
+                    <Link className="blog-list__item--link"
+                        to={`/users/${user.id}`}>
+                        {user.username}
+                    </Link>
+                </td>
+                <td className="tab__cell">
+                    {user.blogs.length}
+                </td>
             </tr>
         )
     })
@@ -24,7 +30,7 @@ export const Users = ({ users, getUsers }) => {
     return (
         <table className="tab">
 
-            <tbody>
+            <tbody className="tab__body">
                 <tr className="tab__row">
                     <th></th>
                     <th>blogs created</th>
@@ -34,10 +40,9 @@ export const Users = ({ users, getUsers }) => {
         </table>
     )
 }
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
         users: state.users.users,
-
     }
 }
 

@@ -1,5 +1,11 @@
 .tab {
     cursor: context-menu;
+    margin: 0 auto;
+
+    &__body{
+        width: 100%;
+        padding: 1rem;
+    }
 
     &__row:not(:nth-child(even)) {
         background-color: grey;
